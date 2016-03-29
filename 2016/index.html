@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>100 замечательных мест Краснодарского края</title>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<style>
+body {
+ padding: 0;
+ margin: 0;
+}
+html, body, #map {
+height: 100%;
+}
+</style>
+
+</head>
+<body>
+<div id="map"></div>
+
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script>
+var LeafIcon = L.Icon.extend({
+			options: {
+				shadowUrl: 'lf-images/leaf-shadow.png',
+				iconSize:     [38, 95],
+				shadowSize:   [50, 64],
+				iconAnchor:   [22, 94],
+				shadowAnchor: [4, 62],
+				popupAnchor:  [-3, -76]
+			}
+		});
+
+var greenIcon = new LeafIcon({iconUrl: 'lf-images/leaf-green.png'}),
+    redIcon = new LeafIcon({iconUrl: 'lf-images/leaf-red.png'}),
+    orangeIcon = new LeafIcon({iconUrl: 'lf-images/leaf-orange.png'});
+
+
+var cities = new L.LayerGroup();
+var l_nature = new L.LayerGroup();
+var l_arch = new L.LayerGroup();
+var l_park = new L.LayerGroup();
+var l_museum = new L.LayerGroup();
+
+L.marker([44.620673, 39.09382],{icon: greenIcon}).bindPopup('<b>Дантово ущелье</b><p><img src="data/img/01.jpg">Расположено в курортной части города</img></p>').addTo(l_nature);
+L.marker([44.607433, 40.097486],{icon: redIcon}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
+L.marker([44.643751, 37.935486],{icon: orangeIcon}).bindPopup('<b>Культурный Центр "Старый парк"</b><p><img src="data/img/03.jpg"></img>Кабардинка, ул. Черноморская, 55. Старый Парк – уникальное место на юге России, где архитектура сплетается с живой природой, где вы сможете приобщиться к истории народов и почувствовать единство культур, соприкоснуться с произведениями современного искусства и обнаружить их корни в глубине веков и тысячелетий.</p>').addTo(l_park);
+L.marker([44.466255, 38.160882],{icon: orangeIcon}).bindPopup('<b>Дом-музей В.Г. Короленко</b><p><img src="data/img/04.jpg"></img>Создан в 1964 г. на базе усадьбы брата писателя И.Г.Короленко. Усадьба  - памятник истории, один из образцов усадеб первых русских интеллигентных поселенцев на Черноморском побережье Кавказа конца XIX - нач. ХХ вв. Экскурсионное обслуживание по предварительной договорённости.</p>').addTo(l_museum);
+
+
+// L.circleMarker([44.607433, 40.097486], {radius: 8,fillColor: "#ff7800",color: "#000",weight: 1,opacity: 1,fillOpacity: 0.8}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
+
+
+	    var mbAttr = '';
+		mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
+
+	    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+		    streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+
+		var map = L.map('map', {
+			center: [45.1, 39.0],
+			zoom: 7,
+			layers: [streets, l_nature,l_arch,l_park,l_museum]
+		});
+
+		var baseLayers = {
+			"Серый фон": grayscale,
+			"Open Street Map": streets
+		};
+
+var overlays = 
+{
+ "Природа": l_nature,
+ "Архитектура": l_arch,
+ "Музей": l_museum,
+ "Парки": l_park
+};
+
+L.control.layers(baseLayers, overlays).addTo(map);
+</script>
+</body>
+</html>
