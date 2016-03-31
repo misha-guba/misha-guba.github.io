@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>100 замечательных мест Краснодарского края</title>
+ <title>Жемчужины Краснодарского края и республики Адыгея</title>
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+ <link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
  <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 <style>
@@ -39,8 +39,11 @@ var LeafIcon = L.Icon.extend({
 var greenIcon = new LeafIcon({iconUrl: 'lf-images/leaf-green.png'}),
     redIcon = new LeafIcon({iconUrl: 'lf-images/leaf-red.png'}),
     orangeIcon = new LeafIcon({iconUrl: 'lf-images/leaf-orange.png'});
-    parkIcon = L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'darkgreen', spin:false}); 
-    museumIcon = L.AwesomeMarkers.icon({icon: 'building', prefix: 'fa', markerColor: 'red', spin:false}); 
+
+natureIcon = L.AwesomeMarkers.icon({icon: 'tree', prefix: 'fa', markerColor: 'green', spin:false}); 
+parkIcon = L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'darkgreen', spin:false}); 
+museumIcon = L.AwesomeMarkers.icon({icon: 'building', prefix: 'fa', markerColor: 'red', spin:false}); 
+archIcon = L.AwesomeMarkers.icon({icon: 'diamond', prefix: 'fa', markerColor: 'black', spin:false}); 
 
 var cities = new L.LayerGroup();
 var l_nature = new L.LayerGroup();
@@ -48,11 +51,13 @@ var l_arch = new L.LayerGroup();
 var l_park = new L.LayerGroup();
 var l_museum = new L.LayerGroup();
 
-L.marker([44.620673, 39.09382],{icon: greenIcon}).bindPopup('<b>Дантово ущелье</b><p><img src="data/img/01.jpg">Расположено в курортной части города</img></p>').addTo(l_nature);
-L.marker([44.607433, 40.097486],{icon: redIcon}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
+L.marker([44.620673, 39.09382],{icon: natureIcon}).bindPopup('<b>Дантово ущелье</b><p><img src="data/img/01.jpg">Расположено в курортной части города</img></p>').addTo(l_nature);
+L.marker([44.607433, 40.097486],{icon: archIcon}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
 L.marker([44.643751, 37.935486],{icon: parkIcon}).bindPopup('<b>Культурный Центр "Старый парк"</b><p><img src="data/img/03.jpg"></img>Кабардинка, ул. Черноморская, 55. Старый Парк – уникальное место на юге России, где архитектура сплетается с живой природой, где вы сможете приобщиться к истории народов и почувствовать единство культур, соприкоснуться с произведениями современного искусства и обнаружить их корни в глубине веков и тысячелетий.</p>').addTo(l_park);
-L.marker([44.466255, 38.160882],{icon: orangeIcon}).bindPopup('<b>Дом-музей В.Г. Короленко</b><p><img src="data/img/04.jpg"></img>Создан в 1964 г. на базе усадьбы брата писателя И.Г.Короленко. Усадьба  - памятник истории, один из образцов усадеб первых русских интеллигентных поселенцев на Черноморском побережье Кавказа конца XIX - нач. ХХ вв. Экскурсионное обслуживание по предварительной договорённости.</p>').addTo(l_museum);
-L.marker([46+35/60+44/60/60,39+39/60+53/60/60],{icon: museumIcon}).bindPopup('<b>Мемориал "Поле казачьей славы"</b><p><img src="data/img/05.jpg"></img></p><p>Открыт 04 августа 2007 г. в станице Кущевской у федеральной трассы М-4 возле знаменитого памятника "Казак". Открытие приурочено к 65-летию Кущевской битвы, произошедшей в 1942 году, когда казаки 15-й Донской и 12-й Кубанской кавалерийских дивизий насмерть держали оборону, остановив танковую атаку немецко-фашистских войск. За этот подвиг 4-й Кубанский казачий кавалерийский корпус получил звание "гвардейский". Комплекс включает в себя памятник "Казак", надвратную часовню, Стену памяти, бытовые постройки кубанских казаков и предметы их быта.').addTo(l_museum);
+L.marker([44.466255, 38.160882],{icon: museumIcon}).bindPopup('<b>Дом-музей В.Г. Короленко</b><p><img src="data/img/04.jpg"></img>Создан в 1964 г. на базе усадьбы брата писателя И.Г.Короленко. Усадьба  - памятник истории, один из образцов усадеб первых русских интеллигентных поселенцев на Черноморском побережье Кавказа конца XIX - нач. ХХ вв. Экскурсионное обслуживание по предварительной договорённости.</p>').addTo(l_museum);
+L.marker([46+35/60+44/60/60,39+39/60+53/60/60],{icon: museumIcon}).bindPopup('<b>Мемориал "Поле казачьей славы"</b><p><img src="data/img/05.jpg"></img></p><p>Открыт 04 августа 2007 г. в станице Кущевской у федеральной трассы М-4 возле знаменитого памятника "Казак". Открытие приурочено к 65-летию Кущевской битвы, произошедшей в 1942 году, когда казаки 15-й Донской и 12-й Кубанской кавалерийских дивизий насмерть держали оборону, остановив танковую атаку немецко-фашистских войск. Комплекс включает в себя памятник "Казак", надвратную часовню, Стену памяти, бытовые постройки кубанских казаков и предметы их быта.').addTo(l_museum);
+L.marker([44.808014, 39.948811],{icon: natureIcon}).bindPopup('<b>Дендрологический парк им. П.В.Букреева</b><p><img src="data/img/06_goncharka.jpg"></img>Более 350 видов растений и уникальный музей камней</p>').addTo(l_nature);
+
 /*
     L.marker([51.941196,4.512291], {icon: L.AwesomeMarkers.icon({icon: 'spinner', prefix: 'fa', markerColor: 'red', spin:true}) }).addTo(map);
     L.marker([51.927913,4.521303], {icon: L.AwesomeMarkers.icon({icon: 'coffee', prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'}) }).addTo(map);
@@ -78,11 +83,12 @@ L.marker([46+35/60+44/60/60,39+39/60+53/60/60],{icon: museumIcon}).bindPopup('<b
 	    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
 		    streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
 
-		var map = L.map('map', {
-			center: [45.1, 39.0],
-			zoom: 7,
-			layers: [streets, l_nature,l_arch,l_park,l_museum]
-		});
+var map = L.map('map', 
+{
+ center: [45.1, 39.0],
+ zoom: 8,
+ layers: [streets, l_nature,l_arch,l_park,l_museum]
+});
 
 		var baseLayers = {
 			"Серый фон": grayscale,
