@@ -4,9 +4,10 @@
  <title>Жемчужины Краснодарского края и республики Адыгея</title>
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+ <link href="css/font-awesome.css" rel="stylesheet">
+ <link rel="stylesheet" href="js/leaflet.css" />
  <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+ <link rel="stylesheet" href="css/bootstrap.min.css"> 
 <style>
 body {
  padding: 0;
@@ -21,10 +22,15 @@ height: 100%;
 <body>
 <div id="map"></div>
 
-<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="js/leaflet.js"></script>
 <script src="js/leaflet.awesome-markers.js"></script>
 
 <script>
+function m(latlon,icon,layer,title,img,descr)
+{
+  var opt = {maxWidth: 200,zoomAnimation: true};
+  L.marker(latlon, icon).bindPopup('<div class="container-fluid"><div class="row"><h5>'+title+'</h5><img class="img-rounded" src="data/img/'+img+'"></img><p class="text-justify">'+descr+'</p></div></div>',opt).addTo(layer);
+}
 var LeafIcon = L.Icon.extend({
 			options: {
 				shadowUrl: 'lf-images/leaf-shadow.png',
@@ -40,75 +46,87 @@ var greenIcon = new LeafIcon({iconUrl: 'lf-images/leaf-green.png'}),
     redIcon = new LeafIcon({iconUrl: 'lf-images/leaf-red.png'}),
     orangeIcon = new LeafIcon({iconUrl: 'lf-images/leaf-orange.png'});
 
-natureIcon = L.AwesomeMarkers.icon({icon: 'tree', prefix: 'fa', markerColor: 'green', spin:false}); 
-parkIcon = L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'darkgreen', spin:false}); 
-museumIcon = L.AwesomeMarkers.icon({icon: 'building', prefix: 'fa', markerColor: 'red', spin:false}); 
-archIcon = L.AwesomeMarkers.icon({icon: 'diamond', prefix: 'fa', markerColor: 'black', spin:false}); 
+natureIcon = {icon: L.AwesomeMarkers.icon({icon: 'tree', prefix: 'fa', markerColor: 'green', spin:false})}; 
+parkIcon = {icon: L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'darkgreen', spin:false})}; 
+museumIcon = {icon: L.AwesomeMarkers.icon({icon: 'building', prefix: 'fa', markerColor: 'red', spin:false})}; 
+archIcon = {icon: L.AwesomeMarkers.icon({icon: 'diamond', prefix: 'fa', markerColor: 'black', spin:false})}; 
+churchIcon = {icon: L.AwesomeMarkers.icon({icon: 'university', prefix: 'fa', markerColor: 'rgba(255, 0, 0, .15)', spin:false})}; 
+extremeparkIcon = {icon: L.AwesomeMarkers.icon({icon: 'child', prefix: 'fa', markerColor: 'darkred', spin:false})}; 
+volcanoIcon = {icon: L.AwesomeMarkers.icon({icon: 'arrow-up', prefix: 'fa', markerColor: 'black', spin:false})}; 
+rockIcon = {icon: L.AwesomeMarkers.icon({icon: 'area-chart', prefix: 'fa', markerColor: 'black', spin:false})}; 
+caveIcon = {icon: L.AwesomeMarkers.icon({icon: 'level-down', prefix: 'fa', markerColor: 'black', spin:false})}; 
+waterfallIcon = {icon: L.AwesomeMarkers.icon({icon: 'exchange', prefix: 'fa', markerColor: 'darkblue', spin:false})}; 
 
-var cities = new L.LayerGroup();
 var l_nature = new L.LayerGroup();
 var l_arch = new L.LayerGroup();
 var l_park = new L.LayerGroup();
 var l_museum = new L.LayerGroup();
+var l_church = new L.LayerGroup();
+    l_extremepark = new L.LayerGroup();
 
-L.marker([44.620673, 39.09382],{icon: natureIcon}).bindPopup('<h3>Дантово ущелье</h3><p><img src="data/img/01.jpg">Расположено в курортной части города</img></p>').addTo(l_nature);
-L.marker([44.808223, 37.439941],{icon: natureIcon}).bindPopup('<b>Болотные кипарисы</b><p><img src="data/img/07_sukko.jpg"><img>Болотные кипарисы, озеро Сукко, поселок Сукко, город-курорт Анапа</p>').addTo(l_nature);
-L.marker([44.607433, 40.097486],{icon: archIcon}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
-L.marker([44.643751, 37.935486],{icon: parkIcon}).bindPopup('<h3>Культурный Центр "Старый парк"</h3><p><img src="data/img/03.jpg"></img>Кабардинка, ул. Черноморская, 55. Старый Парк – уникальное место на юге России, где архитектура сплетается с живой природой, где вы сможете приобщиться к истории народов и почувствовать единство культур, соприкоснуться с произведениями современного искусства и обнаружить их корни в глубине веков и тысячелетий.</p>').addTo(l_park);
-L.marker([44.466255, 38.160882],{icon: museumIcon}).bindPopup('<b>Дом-музей В.Г. Короленко</b><p><img src="data/img/04.jpg"></img>Создан в 1964 г. на базе усадьбы брата писателя И.Г.Короленко. Усадьба  - памятник истории, один из образцов усадеб первых русских интеллигентных поселенцев на Черноморском побережье Кавказа конца XIX - нач. ХХ вв. Экскурсионное обслуживание по предварительной договорённости.</p>').addTo(l_museum);
-L.marker([46+35/60+44/60/60,39+39/60+53/60/60],{icon: museumIcon}).bindPopup('<b>Мемориал "Поле казачьей славы"</b><p><img src="data/img/05.jpg"></img></p><p>Открыт 04 августа 2007 г. в станице Кущевской у федеральной трассы М-4 возле знаменитого памятника "Казак". Открытие приурочено к 65-летию Кущевской битвы, произошедшей в 1942 году, когда казаки 15-й Донской и 12-й Кубанской кавалерийских дивизий насмерть держали оборону, остановив танковую атаку немецко-фашистских войск. Комплекс включает в себя памятник "Казак", надвратную часовню, Стену памяти, бытовые постройки кубанских казаков и предметы их быта.').addTo(l_museum);
-L.marker([44.808014, 39.948811],{icon: natureIcon}).bindPopup('<b>Дендрологический парк им. П.В.Букреева</b><p><img src="data/img/06_goncharka.jpg"></img>Более 350 видов растений и уникальный музей камней</p>').addTo(l_nature);
-L.marker([44.725429,37.867192],{icon: natureIcon}).bindPopup('<b>Перевал "Семь ветров"</b><p><img src="data/img/08_7vetrov.jpg"></img></p>').addTo(l_nature);
-L.marker([44.236798,40.205370],{icon: archIcon}).bindPopup('<b>Старый казачий мост</b><p><img src="data/img/09_dahovsk_most.jpg"></img>Построен мост через реку Дах был в 1906 году. В раствор, скрепляющий камни, добавляли яичный белок. Говорят, именно благодаря белку мост был очень крепким</p>').addTo(l_arch);
-L.marker([46.204217,38.249187],{icon: natureIcon}).bindPopup('<h3>Ясенская коса</h3><p><img src="data/img/10_yasenskaya_kosa.jpg"></img>Длина Ясенской косы составляет 14 км</p>').addTo(l_nature);
-L.marker([44.702514,37.597184],{icon: natureIcon}).bindPopup('<h3>Озеро Абрау</h3><p><img src="data/img/11_ozero_abrau.jpg"></img>!!!!</p>').addTo(l_nature);
-L.marker([44.781997,37.868222],{icon: archIcon}).bindPopup('<h3>"Святая ручка"</h3><p><img src="data/img/12_ser_ruchka.jpg"></img>Комплекс источников «Святая ручка», в районе станицы Небержаевской, Крымский район</p>').addTo(l_arch);
-L.marker([45.013291,37.876413],{icon: archIcon}).bindPopup('<h3>Бабушка-вышка</h3><p><img src="data/img/13_babushka_vishka.jpg"></img>Первая нефтяная скважина в России</p>').addTo(l_arch);
-L.marker([44.240839,39.275245],{icon: natureIcon}).bindPopup('<h3>Гора Индюк</h3><p><img src="data/img/14_gora_indyuk.jpg"></img>!!!!</p>').addTo(l_nature);
+m([44.620673, 39.09382], natureIcon,l_nature,'Дантово ущелье','01.jpg','Располагается в курортной части города Горячий Ключ. У подножия Абадзехской Ключевой горы, на выходе из ущелья расположена Иверская часовня');
+m([44.808223, 37.439941],natureIcon,l_nature,'Болотные кипарисы','07_sukko.jpg','Болотные кипарисы, озеро Сукко, поселок Сукко, город-курорт Анапа');
+m([44.607433, 40.097486],churchIcon,l_church,'Майкопская кафедральная мечеть','02.jpg','Расположена в центральной части города');
+m([44.643751, 37.935486],parkIcon,l_park,'Культурный Центр \"Старый парк\"','03.jpg','Кабардинка, ул. Черноморская, 55. Старый Парк – уникальное место на юге России, где архитектура сплетается с живой природой, где можно приобщиться к истории народов и почувствовать единство культур, соприкоснуться с произведениями современного искусства и обнаружить их корни в глубине веков и тысячелетий.');
+m([44.466255, 38.160882],museumIcon,l_museum,'Дом-музей В.Г. Короленко','04.jpg','Создан в 1964 г. на базе усадьбы брата писателя И.Г.Короленко. Усадьба  - памятник истории, один из образцов усадеб первых русских интеллигентных поселенцев на Черноморском побережье Кавказа конца XIX - нач. ХХ вв. Экскурсионное обслуживание по предварительной договорённости');
+m([46+35/60+44/60/60,39+39/60+53/60/60],museumIcon,l_museum,'Мемориал "Поле казачьей славы"','04.jpg','Открыт 04 августа 2007 г. в станице Кущевской у федеральной трассы М-4 возле знаменитого памятника "Казак". Открытие приурочено к 65-летию Кущевской битвы, произошедшей в 1942 году, когда казаки 15-й Донской и 12-й Кубанской кавалерийских дивизий насмерть держали оборону, остановив танковую атаку немецко-фашистских войск. Комплекс включает в себя памятник "Казак", надвратную часовню, Стену памяти, бытовые постройки кубанских казаков и предметы их быта.');
+m([44.808014, 39.948811],natureIcon,l_nature,'Дендрологический парк им. П.В.Букреева','06_goncharka.jpg','Более 350 видов растений и уникальный музей камней');
+m([44.725429,37.867192],natureIcon,l_nature,'Перевал "Семь ветров"','08_7vetrov.jpg','Перевал "Семь ветров"');
+m([44.236798,40.205370],archIcon,l_arch,'Старый казачий мост','09_dahovsk_most.jpg','Построен мост через реку Дах был в 1906 году. В раствор, скрепляющий камни, добавляли яичный белок. Говорят, именно благодаря белку мост был очень крепким');
+m([46.204217,38.249187],natureIcon,l_nature,'Ясенская коса','10_yasenskaya_kosa.jpg','Длина Ясенской косы составляет 14 км');
+m([44.702514,37.597184],natureIcon,l_nature,'Озеро Абрау','11_ozero_abrau.jpg','!!!');
+m([44.781997,37.868222],churchIcon,l_church,'"Святая ручка"','12_ser_ruchka.jpg','Комплекс источников «Святая ручка», в районе станицы Небержаевской, Крымский район');
+m([45.013291,37.876413],archIcon,l_arch,'Бабушка-вышка','13_babushka_vishka.jpg','Первая нефтяная скважина в России');
+m([44.240839,39.275245],natureIcon,l_nature,'Гора Индюк','14_gora_indyuk.jpg','!!!');
+m([45.054167,38.929247],parkIcon,l_park,'Ботанический сад им. И.С. Косенко','15_krd_dendr.jpg','Располагается на территории Кубанского агроуниверситета. Был открыт в 1959 г. профессором И. С. Косенко. На сегодняшний день площадь сада составляет 46 га.');
+m([44.802505,37.439923],extremeparkIcon,l_extremepark,'Замок "Львиная голова"','16_sukko_zamok.jpg','На территории комплекса проводится представление "Шоу рыцарей". Здесь отважно сражаются на мечах за честь своего имени, за любовь, за мир, за справедливость. В представление участвуют профессиональные актеры, танцоры, каскадеры, фехтовальщики, канатоходцы.  На территории замка расположен музей средневековой инквизиции, мастерская кузнеца и гончара, конюшня, а также тир доброго разбойника Робин Гуда.');
+m([45.204642,36.784847],volcanoIcon,l_nature,'Грязевой вулкан "Карабетова сопка"','17_vulkan-karabetova-sopka.jpg','Cамый большой действующий вулкан Таманского полуострова, высота 152 м над уровнем моря. Извержение сопки происходит каждые 15-20 лет.');
+m([45.312072,37.081981],volcanoIcon,l_nature,'Грязевой вулкан "Ахтанизовский"','18_vulkan_ahtaniz.jpg','Ахтанизовский грязевой вулкан самый красивый и  молодой вулкан Таманского полуострова. Своей формой вулкан  представляет собой коническую сопку высотой 67 метров над уровнем моря.');
+m([45.070152,37.611338],volcanoIcon,l_nature,'Грязевой вулкан Шуго','19_vulkan_shugo.jpg','«Шыго уашх», — так называют вулкан адыги, иначе — «курган с плоской вершиной». Кубанские казаки назвали вулкан Гнилой горой на Шуге (речке).');
+m([45+21/60+25/60/60,37+05/60+57/60/60],volcanoIcon,l_nature,'Грязевой вулкан Тиздар','20_vulkan_tizdar.jpg','Кратер расположен в 50 метрах от Азовского моря. Размеры озера в кратере — 15-20 метров, глубина кратера вулкана около метра. На дне имеется лечебная грязь с высоким содержанием сероводорода, брома и йода.');
+m([44.591485,38.371672],rockIcon,l_nature,'Скалы "Краснодарские столбы(Монастыри)"','21_skali_monastiri.jpg','Скальная гряда, протянувшаяся по гребню склона на полкилометра. Самая высокая скала достигает 50 метров. Благодаря эрозии скалы приобрели живописные очертания и местные альпинисты, по аналогии с Красноярскими столбами, стали называть их "Краснодарскими столбами".');
+m([44.196744,39.072714],natureIcon,l_nature,'Дуб-великан','22_dub_velikan.jpg','Дуб, высотой около 20 метров, диаметр 2,3 м, ориентировочный возраст  дерева более 500 лет, диаметр кроны 20 м.');
+// уточнить координаты
+m([44.4167517, 39.030312],waterfallIcon,l_nature,'Адов водопад','23_vodopad_adov.jpg','Расположен на правом притоке Адова ручья, в бассейне реки Чепси. Высота 12 м.');
+m([43.948078,39.310707],extremeparkIcon,l_nature,'Берендеево царство','24_berendeevo_carstvo.jpg','Берендеево царство – это рекреационный объект, расположенный на одном из притоков, называемым «Ручей Лель» в долине реки Куапсе перед Мамедовым ущельем. Он представляет собой каскад из 7 водопадов, высота которых составляет от 7 до 27 метров и между которыми проложены деревянные мостики.');
+m([43.568288,39.741989],parkIcon,l_nature,'Сочинский дендрарий','25_dendr_sochi.jpg','Заложен в 1899 году. В настоящее время площадь парка составляет 49 гектаров. В нем произрастает более 1 500 видов, форм и сортов древесных и кустарниковых пород. ');
+m([45.218703,36.694872],natureIcon,l_nature,'Казачья станица "Атамань"','26_ataman.jpg','На западной окраине станицы Тамань, на берегу Таманского залива Чёрного моря в августе 2009 года открыт этнотуристический комплекс казачьей станицы, построенной в натуральную величину. Экспонаты музея, собранные по станицам края, показывают быт и уклад жизни казачьих семей в XVIII—XX веке. Для беглого осмотра достопримечательностей требуется не менее 2-3-х часов.');
+m([44.1217944,40.0284944],caveIcon,l_nature,'Большая Азишская пещера','27_bolshaya_azishskaya_peschera.jpg','Пещера известна с 1911 года, но только в 1987 году была оборудована как экскурсионный объект. Имеет длину более 640 м. Пещера располагается среди буково-пихтового леса в южной части хребта Азиш-Тау.');
+m([44.224487,39.904650],rockIcon,l_nature,'Гуамское ущелье','28_guamskoe.jpg','Ущелье в верховьях реки Курджипс находится между хребтами Гуама и Лагонакский, резко обрываясь четырёхсотметровыми скалами к долине реки Курджипс. Длина ущелья около 5 км, а глубина около 400 м, местами оно сужается до 2-х метров.');
+m([44.438586,38.184544],rockIcon,l_nature,'Скала Парус','29_skala_parus.jpg','Представляет собой вертикально стоящий на берегу моря пласт песчаника, отделённый от основного скального массива провалом. По форме скала напоминает очертания четырёхугольного паруса, за что и получила своё название. При толщине скалы немногим более метра, высота составляет более 25 метров, а длина — более 20.');
+m([44.584596,38.074003],extremeparkIcon,l_nature,'Сафари-парк','30_safari_park.jpg','В «Сафари-парке» предаставлена уникальная возможность увидеть «дикий мир животных» в условиях, максимально приближенных к природным, посетить музей «Из глубины веков и вод…», по самой длинной (1600 метров) и высокой (640 метров над уровнем моря), канатной дороге Черноморского побережья за 20 минут можно подняться на самую вершину Маркотхского хребта');
 
-/*
-    L.marker([51.941196,4.512291], {icon: L.AwesomeMarkers.icon({icon: 'spinner', prefix: 'fa', markerColor: 'red', spin:true}) }).addTo(map);
-    L.marker([51.927913,4.521303], {icon: L.AwesomeMarkers.icon({icon: 'coffee', prefix: 'fa', markerColor: 'red', iconColor: '#f28f82'}) }).addTo(map);
-    L.marker([51.936063,4.502077], {icon: L.AwesomeMarkers.icon({icon: 'cog', prefix: 'fa', markerColor: 'purple', iconColor: 'black'}) }).addTo(map);
-    L.marker([51.932835,4.506969], {icon: L.AwesomeMarkers.icon({icon: 'glass', prefix: 'fa', markerColor: 'green'}) }).addTo(map);
-    L.marker([51.930295,4.515209], {icon: L.AwesomeMarkers.icon({icon: 'shopping-cart', prefix: 'fa', markerColor: 'blue'}) }).addTo(map);
-    L.marker([51.930083,4.507742], {icon: L.AwesomeMarkers.icon({icon: 'info', prefix: 'fa', markerColor: 'orange'}) }).addTo(map);
-
-    L.marker([51.930454,4.527054], {icon: L.AwesomeMarkers.icon({icon: 'group', prefix: 'fa', markerColor: 'darkred'}) }).addTo(map);
-    L.marker([51.929607,4.527054], {icon: L.AwesomeMarkers.icon({icon: 'arrow-right', prefix: 'fa', markerColor: 'darkblue'}) }).addTo(map);
-    L.marker([51.928919,4.528856], {icon: L.AwesomeMarkers.icon({icon: 'twitter', prefix: 'fa', markerColor: 'cadetblue'}) }).addTo(map);
-    L.marker([51.930295,4.530745], {icon: L.AwesomeMarkers.icon({icon: 'phone', prefix: 'fa', markerColor: 'darkpurple'}) }).addTo(map);
-    L.marker([51.925055,4.512806], {icon: L.AwesomeMarkers.icon({icon: 'ambulance', prefix: 'fa', markerColor: 'darkgreen'}) }).addTo(map);
-    L.marker([51.925902,4.505768], {icon: L.AwesomeMarkers.icon({icon: 'medkit', prefix: 'fa', markerColor: 'darkblue'}) }).addTo(map);
-*/
-
-// L.circleMarker([44.607433, 40.097486], {radius: 8,fillColor: "#ff7800",color: "#000",weight: 1,opacity: 1,fillOpacity: 0.8}).bindPopup('<b>Майкопская кафедральная мечеть</b><p><img src="data/img/02.jpg">Расположена в центральной части города</img></p>').addTo(l_arch);
 
 
-	    var mbAttr = '';
-		mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
 
-	    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
-		    streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+var mbAttr = '';
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
+
+var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+    streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
 
 var map = L.map('map', 
 {
+ attributionControl: false,
  center: [45.1, 39.0],
- zoom: 8,
- layers: [streets, l_nature,l_arch,l_park,l_museum]
+ zoom: 7,
+ layers: [streets, l_nature,l_arch,l_park,l_museum,l_church,l_extremepark]
 });
 
-		var baseLayers = {
-			"Серый фон": grayscale,
-			"Open Street Map": streets
-		};
+var baseLayers = 
+{
+ "Серый фон": grayscale,
+ "Open Street Map": streets
+};
 
 var overlays = 
 {
  "Природа": l_nature,
  "Архитектура": l_arch,
  "Музеи": l_museum,
- "Парки": l_park
+ "Парки": l_park,
+ "Религиозные объекты": l_church,
+ "Парк развлечений": l_extremepark
 };
 
 L.control.layers(baseLayers, overlays).addTo(map);
